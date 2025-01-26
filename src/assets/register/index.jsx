@@ -21,7 +21,14 @@ function Register() {
     // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries());
     if (!formJson.vardas || formJson.vardas.trim() === "") {
-      alert("Prašome įvesti savo vardą!");
+      // alert("Prašome įvesti savo vardą!");
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-danger';
+      alert.innerHTML = "Prašome įvesti savo vardą!";
+      document.body.appendChild(alert);
+      setTimeout(() => {
+        alert.remove();
+      }, 3000);
       return;
     }
 
@@ -41,6 +48,15 @@ function Register() {
       })
       .catch((error) => {
         console.error("Error registering user:", error.code, error.message);
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-danger';
+        const tekstas = error.code === "auth/weak-password" ? " Slaptažodi turi sudaryti bent  6 simboliai" : "Toks el. paštas jau užregistruotas";
+       
+        alert.innerHTML = tekstas;
+        document.body.appendChild(alert);
+        setTimeout(() => {
+          alert.remove();
+        }, 3000);
       });
   }
   return (

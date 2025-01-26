@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -30,7 +31,16 @@ function Login() {
       })
       .catch((error) => {
         console.error("Error logging in:", error.code, error.message);
-      });
+          const alert = document.createElement('div');
+          alert.className = 'alert alert-danger';
+          alert.innerHTML = "Neteisingas el. paštas arba slaptažodis";
+          document.body.appendChild(alert);
+          setTimeout(() => {
+            alert.remove();
+          }, 3000);
+          
+
+        });
     ;
   }
 
