@@ -45,7 +45,7 @@ function Login() {
           <div className="form-floating">
             <input type="email" className="form-control" name="email" placeholder="El. paštas" />
 
-            <label for="floatingInput">Email address</label>
+            <label for="floatingInput">El. paštas</label>
           </div>
           <div className="form-floating">
             <input type="password" className="form-control" name="slaptazodis" placeholder="Slaptažodis" />
@@ -60,6 +60,7 @@ function Login() {
             </label>
           </div>
           <button className="w-100 btn btn-lg btn-primary" type="submit">Prisijungti</button>
+          <p className="mt-5 mb-3 text-muted">Neturite paskyros? <a href="/register">Registruotis</a></p>
           <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
         </form>
       </main>

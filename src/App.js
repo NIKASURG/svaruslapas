@@ -8,7 +8,7 @@ import Login from './assets/login';
 import Register from './assets/register';
 import Home from './assets/home/home';
 import Header from './assets/header';
-
+import PridetiSkelbima from './assets/pridetiSkelbima';
 const keliai = [
   {
     path: "/login",
@@ -20,7 +20,9 @@ const keliai = [
   , {
     path: "/home",
     element: <Home />,
-  }
+  },
+  { path: "/pridetiSkelbima",
+     element: <PridetiSkelbima /> }
 ];
 const AppRoutes = () => {
   return useRoutes(keliai);
@@ -51,5 +53,5 @@ function App() {
     </div>
   )
 }
- 
+
 export default App;

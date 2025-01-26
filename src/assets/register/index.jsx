@@ -70,6 +70,9 @@ function Register() {
               <label for="floatingPassword">Vardas</label>
             </div>
             <button className="w-100 btn btn-lg btn-primary" type="submit">Prisiregistruoti</button>
+            <p>
+              Jau turi paskyrą? <a href="/login">Prisijunk</a>
+            </p>
             <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
           </form>
         </main>

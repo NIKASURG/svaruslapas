@@ -30,8 +30,8 @@ function Header() {
                     </form>
                     {!user ? (
                         <div className="text-end">
-                            <button type="button" className="btn btn-outline-light me-2" onClick={() => window.location.href = '/login'} >Login</button>
-                            <button type="button" className="btn btn-warning" onClick={() => window.location.href = '/register'}>Sign-up</button>
+                            <button type="button" className="btn btn-outline-light me-2" onClick={() => window.location.href = '/login'} >Prisijunkti</button>
+                            <button type="button" className="btn btn-warning" onClick={() => window.location.href = '/register'}>Prisiregistruoti</button>
                         </div>
                     ) : (<  div className="d-flex align-items-center" >
                         <div className=" mb-0 me-3">
