@@ -13,6 +13,8 @@ function googleLogin() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
+        window.location.href = '/home'
+
     }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;

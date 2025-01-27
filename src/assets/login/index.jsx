@@ -51,6 +51,8 @@ function Login() {
 
       <main className="form-signin position-absolute top-50 start-50 translate-middle w-25  ">
         <form onSubmit={paspaustas}>
+        <div className="card shadow p-3 mb-5 bg-white rounded d-grid gap-2">
+
           <h1 className="h3 mb-3 fw-normal">Prisijungti</h1>
 
           <div className="form-floating">
@@ -72,13 +74,14 @@ function Login() {
           </div>
           <button className="w-100 btn btn-lg btn-primary" type="submit">Prisijungti</button>
           <p className="mt-5 mb-3 text-muted">Neturite paskyros? <a href="/register">Registruotis</a></p>
-         <br></br>
+       
          <p>Arba</p>
 
 <center>
-<a href="#" type="button" class="login-with-google-btn"  onClick={googleLogin}>Prisijungri su Google</a>
+<a href="#" type="button" className="login-with-google-btn"  onClick={googleLogin}>Prisijungri su Google</a>
 </center>
           <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
+          </div>
         </form>
       </main>
     </div>

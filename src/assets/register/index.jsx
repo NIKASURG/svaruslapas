@@ -43,9 +43,9 @@ function Register() {
         });
         // console.log("User registered:", userCredential.user);
       }).then((user) => {
-
-
         window.location.href = '/home'
+
+
       })
       .catch((error) => {
         console.error("Error registering user:", error.code, error.message);
@@ -68,6 +68,8 @@ function Register() {
 
         <main className="form-signin position-absolute top-50 start-50 translate-middle w-25  ">
           <form onSubmit={paspaustas}>
+        <div className="card shadow p-3 mb-5 bg-white rounded d-grid gap-2">
+
             <h1 className="h3 mb-3 fw-normal">Registracija</h1>
 
             <div className="form-floating">
@@ -90,12 +92,12 @@ function Register() {
             <p>
               Jau turi paskyrą? <a href="/login">Prisijunk</a>
             </p>
-            <br></br>
             <p>Arba</p>
             <center>
               <a href="#" type="button" class="login-with-google-btn" onClick={googleLogin}>Prisijungti su Google</a>
             </center>
             <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
+            </div>
           </form>
         </main>
       </div>
