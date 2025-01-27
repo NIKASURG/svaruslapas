@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import '../../App.css';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase/firebaseConfig.js';
-
+import googleLogin from './googleLogin';
 
 
 function Login() {
@@ -71,6 +72,12 @@ function Login() {
           </div>
           <button className="w-100 btn btn-lg btn-primary" type="submit">Prisijungti</button>
           <p className="mt-5 mb-3 text-muted">Neturite paskyros? <a href="/register">Registruotis</a></p>
+         <br></br>
+         <p>Arba</p>
+
+<center>
+<a href="#" type="button" class="login-with-google-btn"  onClick={googleLogin}>Prisijungri su Google</a>
+</center>
           <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
         </form>
       </main>

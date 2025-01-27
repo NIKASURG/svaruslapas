@@ -4,6 +4,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from '../../firebase/firebaseConfig.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import googleLogin from '../login/googleLogin';
 
 
 function Register() {
@@ -89,6 +90,11 @@ function Register() {
             <p>
               Jau turi paskyrą? <a href="/login">Prisijunk</a>
             </p>
+            <br></br>
+            <p>Arba</p>
+            <center>
+              <a href="#" type="button" class="login-with-google-btn" onClick={googleLogin}>Prisijungti su Google</a>
+            </center>
             <p className="mt-5 mb-3 text-muted">&copy; 2007-2025</p>
           </form>
         </main>
