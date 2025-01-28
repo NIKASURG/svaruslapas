@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { db, auth, saveTask } from '../../firebase/firebaseConfig'; 
-import { collection, query, where, getDocs } from "firebase/firestore";  
-import { miestai } from '../miestai'; 
+import { db, auth, saveTask, deleteTask } from '../../firebase/firebaseConfig';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { miestai } from '../miestai';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './PridetiSkelbima.css'; // Papildomas CSS failas
 
 const PridetiSkelbima = () => {
   const [skelbimai, setSkelbimai] = useState([]);
-  const [loading, setLoading] = useState(true); 
-  const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     preke: '',
     aprasymas: '',
@@ -20,11 +21,7 @@ const PridetiSkelbima = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        setUser(currentUser); 
-      } else {
-        setUser(null); 
-      }
+      setUser(currentUser);
     });
 
     return () => unsubscribe();
@@ -37,7 +34,7 @@ const PridetiSkelbima = () => {
       const skelbimaiQuery = query(skelbimaiRef, where('uid', '==', userUid));
 
       setLoading(true);
-      
+
       getDocs(skelbimaiQuery).then(snapshot => {
         const skelbimaiData = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -68,9 +65,21 @@ const PridetiSkelbima = () => {
 
     if (preke && aprasymas && kaina && kategorija && miestas) {
       saveTask(preke, aprasymas, kaina, kategorija, miestas);
+      setFormData({ // Išvalyti formą po pateikimo
+        preke: '',
+        aprasymas: '',
+        kaina: '',
+        kategorija: '',
+        miestas: '',
+      });
+      alert("Skelbimas sėkmingai pateiktas!");
     } else {
       alert("Prašome užpildyti visus laukus!");
     }
+  };
+
+  const istrinti = (id) => {
+    deleteTask(id);
   };
 
   return (
@@ -85,91 +94,93 @@ const PridetiSkelbima = () => {
         <div>
           {user ? (
             <>
-              <form onSubmit={handleSubmit} className="mb-4">
-                <div className="form-group">
-                  <input
-                    name="preke"
-                    type="text"
-                    placeholder="Prekė"
-                    className="form-control rounded-pill shadow-sm"
-                    value={formData.preke}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group my-3">
-                  <input
-                    name="aprasymas"
-                    type="text"
-                    placeholder="Aprašymas"
-                    className="form-control rounded-pill shadow-sm"
-                    value={formData.aprasymas}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    name="kaina"
-                    type="text"
-                    placeholder="Kaina"
-                    className="form-control rounded-pill shadow-sm"
-                    value={formData.kaina}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group my-3">
-                  <select
-                    name="kategorija"
-                    className="form-select rounded-pill shadow-sm"
-                    value={formData.kategorija}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Pasirinkite kategoriją</option>
-                    <option value="Transportas">Transportas</option>
-                    <option value="Nekilnojamasis turtas">Nekilnojamasis turtas</option>
-                    <option value="Darbas, paslaugos">Darbas, paslaugos</option>
-                    <option value="Buitis">Buitis</option>
-                    <option value="Kompiuterija">Kompiuterija</option>
-                    <option value="Komunikacijos">Komunikacijos</option>
-                    <option value="Technika">Technika</option>
-                    <option value="Pramogos">Pramogos</option>
-                    <option value="Drabužiai, avalynė">Drabužiai, avalynė</option>
-                    <option value="Auginantiems vaikus">Auginantiems vaikus</option>
-                  </select>
-                </div>
-                <div className="form-group my-3">
-                  <select
-                    name="miestas"
-                    className="form-select rounded-pill shadow-sm"
-                    value={formData.miestas}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Pasirinkite miestą</option>
-                    {miestaiArray.map((miestas, index) => (
-                      <option key={index} value={miestas}>
-                        {miestas}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="card shadow-lg p-4 mb-5 bg-white rounded">
+                <h2 className="text-center mb-4">Pridėti naują skelbimą</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <input
+                      name="preke"
+                      type="text"
+                      placeholder="Prekė"
+                      className="form-control form-control-lg rounded-pill"
+                      value={formData.preke}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <textarea
+                      name="aprasymas"
+                      placeholder="Aprašymas"
+                      className="form-control form-control-lg rounded"
+                      value={formData.aprasymas}
+                      onChange={handleChange}
+                      rows="3"
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      name="kaina"
+                      type="text"
+                      placeholder="Kaina"
+                      className="form-control form-control-lg rounded-pill"
+                      value={formData.kaina}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <select
+                      name="kategorija"
+                      className="form-select form-select-lg rounded-pill"
+                      value={formData.kategorija}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Pasirinkite kategoriją</option>
+                      <option value="Transportas">Transportas</option>
+                      <option value="Nekilnojamasis turtas">Nekilnojamasis turtas</option>
+                      <option value="Darbas, paslaugos">Darbas, paslaugos</option>
+                      <option value="Buitis">Buitis</option>
+                      <option value="Kompiuterija">Kompiuterija</option>
+                      <option value="Komunikacijos">Komunikacijos</option>
+                      <option value="Technika">Technika</option>
+                      <option value="Pramogos">Pramogos</option>
+                      <option value="Drabužiai, avalynė">Drabužiai, avalynė</option>
+                      <option value="Auginantiems vaikus">Auginantiems vaikus</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <select
+                      name="miestas"
+                      className="form-select form-select-lg rounded-pill"
+                      value={formData.miestas}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Pasirinkite miestą</option>
+                      {miestaiArray.map((miestas, index) => (
+                        <option key={index} value={miestas}>
+                          {miestas}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-lg w-100 rounded-pill">
+                    Įkelti skelbimą
+                  </button>
+                </form>
+              </div>
 
-                <button type="submit" className="btn btn-primary w-100 rounded-pill shadow-sm">
-                  Įkelti skelbimą
-                </button>
-              </form>
-
-              <h2>Jūsų skelbimai:</h2>
+              <h2 className="text-center mb-4">Jūsų skelbimai:</h2>
               <div className="row">
                 {skelbimai.length > 0 ? (
                   skelbimai.map((skelbimas) => (
                     <div className="col-md-4 mb-4" key={skelbimas.id}>
-                      <div className="card shadow-lg rounded-lg">
+                      <div className="card shadow-lg rounded-lg h-100">
                         <img
-                          src="path_to_image.jpg"
+                          src="https://via.placeholder.com/300"
                           className="card-img-top rounded-top"
                           alt="Prekės nuotrauka"
                         />
@@ -187,6 +198,7 @@ const PridetiSkelbima = () => {
                             </button>
                             <button
                               className="btn btn-danger rounded-pill shadow-sm"
+                              onClick={() => istrinti(skelbimas.id)}
                             >
                               Ištrinti 🗑
                             </button>
@@ -196,12 +208,12 @@ const PridetiSkelbima = () => {
                     </div>
                   ))
                 ) : (
-                  <p>Jūs dar neturite sukurtų skelbimų.</p>
+                  <p className="text-center">Jūs dar neturite sukurtų skelbimų.</p>
                 )}
               </div>
             </>
           ) : (
-            <p>Norėdami pridėti skelbimus, <a href="/login">prisijunkite</a>.</p>
+            <p className="text-center">Norėdami pridėti skelbimus, <a href="/login">prisijunkite</a>.</p>
           )}
         </div>
       )}
